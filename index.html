@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>Sample HCL</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+	<script src="app.js"></script>	
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>		
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css">
+	
+	<body>	
+	<h2 class="text-center">Food Info</h2>
+		<div class="container" ng-app="myApp" ng-controller="foodController">		
+			<div class="form-group" ng-hide="showReport">
+				<input class="col-sm-12 form-control" id="search" type="text" ng-model="searchFood" placeholder="Search food"/>
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Report</th>
+						</tr>
+					</thead>
+				
+				<tbody>
+					<tr ng-repeat="x in foodList|filter:searchFood" >
+						<td>{{ x.name }}</td>
+						<input type="hidden" value={{x.id}} ng-model='id'/>
+						<td><a class="btn btn-primary" ng-click="callFoodReport($index)" >Report</a></td>
+					</tr>
+				</tbody>
+				  
+				</table>
+			</div>
+			<div ng-show="showReport">				
+				<table class="table table-condensed">
+					<thead>
+						<th>Nutrient name</th>
+						<th>Grams</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="n in nutrientList" >
+							<td>{{ n.name }}</td>
+							<td ng-if="n.unit === 'g'">{{ n.value }}</td>
+							<td ng-if="n.unit === 'kcal'">{{ n.value * .28 }}</td>
+							<td ng-if="n.unit === 'kJ'">{{ n.value / 0.0041 }}</td>
+						</tr>
+					</tbody>				  
+				</table>
+				<input class="btn btn-primary" type="button" value="Back" ng-click="return()"/>
+			</div>
+		</div>
+	</body>
+</html>
